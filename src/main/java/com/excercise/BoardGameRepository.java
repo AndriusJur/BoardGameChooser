@@ -3,6 +3,8 @@ package com.excercise;
 import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,23 @@ public class BoardGameRepository {
         return dataSource;
     }
 
-    public static void create(Boardgame boardgame) throws Exception {
+    public static void createDatabase() throws SQLException {
+
+        try {
+            //creating connection to database
+            var connection = DriverManager.getConnection("jdbc:h2:./boardgame;AUTO_SERVER=TRUE");
+            String createTableSql = "create table if not exists BOARDGAME (id bigint auto_increment primary key, name varchar, gameType varchar, playerCount integer,  playTimePerPlayer integer, timesPlayed integer)";// creating a  table BOARDGAME query
+            var statement = connection.createStatement();
+            statement.execute(createTableSql);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+        public static void create(Boardgame boardgame) throws Exception {
         try (Connection connection=getDataSource().getConnection()){
-            String insertStatement="insert into BOARDGAME (id, name, gameType, playerCount, playTimePerPlayer, timesPlayed) values(?, ?, ?, ?, ?, ?)";
+            String insertStatement="insert into BOARDGAME (name, gameType, playerCount, playTimePerPlayer, timesPlayed) values(?, ?, ?, ?, ?)";
             var preparedStatement=connection.prepareStatement(insertStatement);
             preparedStatement.setString(1, boardgame.name); //indexes correspond to question marks in sql
             preparedStatement.setString(2, boardgame.gameType);
@@ -31,8 +47,8 @@ public class BoardGameRepository {
         try (Connection connection=getDataSource().getConnection()){
             String insertStatement="update BOARDGAME set timesPlayed=? where name=?";
             var preparedStatement=connection.prepareStatement(insertStatement);
-            preparedStatement.setString(1, boardgame.name);
-            preparedStatement.setString(2, String.valueOf(boardgame.timesPlayed));//ditto
+            preparedStatement.setInt(1, boardgame.timesPlayed+1);
+            preparedStatement.setString(2, boardgame.name);//ditto
             preparedStatement.execute();
 
         }
@@ -41,11 +57,17 @@ public class BoardGameRepository {
     public static void deleteAll () throws Exception {
         try (Connection connection=getDataSource().getConnection()){
             var statement=connection.createStatement();
-            statement.executeUpdate("DELETE FROM BOARDGAME");// NB excecuteUpdate , not just update;
+            statement.executeUpdate("DELETE FROM BOARDGAME");//
 
         }
     }
-    //retrieve
+    public static void deleteOne (String gameName) throws Exception {
+        try (Connection connection=getDataSource().getConnection()){
+            var statement=connection.createStatement();
+            statement.executeUpdate("DELETE FROM BOARDGAME where name = "+gameName+"");
+        }
+    }
+
     public static List<Boardgame> findAll()  throws Exception {
         List<Boardgame> boardgames = new ArrayList<>();
         try (Connection connection=getDataSource().getConnection()){
@@ -58,23 +80,4 @@ public class BoardGameRepository {
         }
         return boardgames;
     }
-    public static void main(String[] args) {
-        try {
-            BoardGameRepository.deleteAll();
-
-            Boardgame boardgame =new Boardgame("make coffee");
-            BoardGameRepository.create(boardgame);
-
-            Boardgame boardgame2 =new Boardgame(11,"eat some 'za");// wont  change anything
-            BoardGameRepository.update(boardgame2);
-
-            List<Boardgame> boardgames = BoardGameRepository.findAll();
-            for (Boardgame x: boardgames){
-                System.out.println(x.getName());
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
-}

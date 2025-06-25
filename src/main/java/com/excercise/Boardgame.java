@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Boardgame {  // enum game type!
+
+public class Boardgame {  // TODO: implement enum -  game type!
     int id;
     String name;
     String gameType;
     int playerCount;
     int playTimePerPlayer;
     int timesPlayed;
-
 
 
     public Boardgame(String name) {
