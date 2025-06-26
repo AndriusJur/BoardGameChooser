@@ -67,14 +67,59 @@ public class BoardGameRepository {
             statement.executeUpdate("DELETE FROM BOARDGAME where name = "+gameName+"");
         }
     }
+    public static Boardgame findOne(String name) throws Exception {
+        try (Connection connection = getDataSource().getConnection()) {
+            var sql = "SELECT * FROM BOARDGAME WHERE name = ?";
 
+            try (var preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, name);
+
+                try (var resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return new Boardgame(resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getInt(4),
+                                resultSet.getInt(5),
+                                resultSet.getInt(6)); // 1-6 - columns
+                    }
+                }
+            }
+        }
+        return null; // Return null if no boardgame found
+    }
+//    public static Boardgame findOne (String name) throws Exception {
+//        try (Connection connection = getDataSource().getConnection()) {
+//            var insertStatement = "select * from BOARDGAME where  name = ? ";
+//
+//            var preparedStatement = connection.prepareStatement(insertStatement);
+//            preparedStatement.setString(1, name);
+//
+//            var resultSet = preparedStatement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                return new Boardgame(resultSet.getInt(1),
+//                        resultSet.getString(2),
+//                        resultSet.getString(3),
+//                        resultSet.getInt(4),
+//                        resultSet.getInt(5),
+//                        resultSet.getInt(6)); //1-6 - columns
+//            }
+//        }
+//        return null;
+//    }
     public static List<Boardgame> findAll()  throws Exception {
         List<Boardgame> boardgames = new ArrayList<>();
         try (Connection connection=getDataSource().getConnection()){
             var statement=connection.createStatement();
             var resultSet=statement.executeQuery("select * from BOARDGAME");
             while (resultSet.next()){
-                Boardgame boardgame =new Boardgame(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4), resultSet.getInt(5), resultSet.getInt(6)); //1-6 - columns
+                Boardgame boardgame =new Boardgame(resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getInt(4),
+                        resultSet.getInt(5),
+                        resultSet.getInt(6)); //1-6 - columns
                 boardgames.add(boardgame);
             }
         }

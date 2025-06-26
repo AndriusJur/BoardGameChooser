@@ -9,8 +9,7 @@ import java.util.Scanner;
 public class UserInterface {
 
     public static void StartUI() throws Exception {
-        System.out.println("Hi! This is a boardgame management app.\n These are the possible commands. To SELECT - insert a valid number");
-         String commands="1 - Add a game to collection \n2 - Registrate a play of a game\n3 - choose a random game to play\n4- List all games in collection\n5 - Statstics of a selected game\n6- delete a single game from library\n7-delete all games from library\n0-exits app";
+         String commands="\n1 - Add a game to collection \n2 - Registrate a play of a game\n3 - choose a random game to play\n4- List all games in collection\n5 - Statstics of a selected game\n6- delete a single game from library\n7-delete all games from library\n0-exits app";
         System.out.println(commands);
          Scanner scanner= new Scanner(System.in);
          String cmd=scanner.nextLine();
@@ -30,27 +29,22 @@ public class UserInterface {
              case "7":DeleteAllGames();
              break;
              case "0":break;
-
-
-
          }
-
     }
     @SneakyThrows
     public static void AddGame() {
         Scanner scanner= new Scanner(System.in);
         System.out.println("Enter title of game:");// check for uniqueness!!
-        String title=scanner.nextLine().toLowerCase().trim();
-        IsGameInLibrary(title);
-
+        String cmd =scanner.nextLine().toLowerCase().trim();
+//        IsGameInLibrary(cmd);
         Boardgame game=new Boardgame();
-        game.setName(title);
+        game.setName(cmd);
         System.out.println("Enter type of game:");
-        game.setGameType(title);
-        System.out.println("Enter player count:");
-        game.setPlayerCount(Integer.valueOf(title));
-        System.out.println("playTimePerPlayer:");
-        game.setPlayTimePerPlayer(Integer.valueOf(title));
+        game.setGameType(scanner.nextLine().toLowerCase().trim());
+        System.out.println("Enter best suited player count ( a single number):");
+        game.setPlayerCount(Integer.valueOf(scanner.nextLine()));
+        System.out.println("playTimePerPlayer,in minutes:");
+        game.setPlayTimePerPlayer(Integer.valueOf(scanner.nextLine()));
         BoardGameRepository.create(game);
         System.out.println("Game entered into database succesfully. Returning to main menu.");
         StartUI();
@@ -68,42 +62,48 @@ public class UserInterface {
         StartUI();
     }
     @SneakyThrows
-    public static String ChooseRandomGame (){
+    public static void ChooseRandomGame (){
         List<Boardgame> boardgames = BoardGameRepository.findAll();
         if(boardgames.isEmpty()){
-            return "The list is empty. Probably should buy some games";
+            System.out.println("The list is empty. Probably should buy some games");
+            StartUI();
         }
         Random rnd=new Random();
         Boardgame randomBoard=boardgames.get(rnd.nextInt(boardgames.size()));
-        return "Your random boardgame is:" + randomBoard.getName()+".\nReturning to main menu.";
-
+        System.out.println("Your random boardgame is:" + randomBoard.getName()+".\nReturning to main menu.");
+        StartUI();
 
     }
 
     public static void  ListAllGames() throws Exception {
         List<Boardgame> boardgames = BoardGameRepository.findAll();
         if(boardgames.isEmpty()){
-            System.out.println("The list is empty. Probably should buy some games");
+            System.out.println("The list is empty. Probably should buy some games. Returning to main menu");
+            StartUI();
         }
-
         for (Boardgame x : boardgames) {
             System.out.println(x.getName());
+        }
+        System.out.println("To return to main menu, enter MAIN below, to exit - press any button");
+        Scanner scanner= new Scanner(System.in);
+        if (scanner.nextLine().toLowerCase().trim().equals("main")){
+            StartUI();
         }
     }
     @SneakyThrows
     public static void StatsOfSelectedGame() throws Exception {
         System.out.println("Enter a game title:");
-        Scanner scanner= new Scanner(System.in);
-        String title=scanner.nextLine().trim();
-        IsGameInLibrary(title);
+        Scanner scanner = new Scanner(System.in);
 
-        List<Boardgame> boardgames = BoardGameRepository.findAll();//TODO: fix for select one (probalbly with boardgames list in array)
-        for (Boardgame x : boardgames) {
-            if(x.getName().equalsIgnoreCase(title)){
-                System.out.println(x.toString());
-            }else {
-                System.out.println("Game not found");
+            String title = scanner.nextLine().trim();
+            Boardgame game = BoardGameRepository.findOne(title);
+
+            if (game == null) {
+                System.out.println("Game not found. Returning to main menu.");
+                return;
             }
+
+            System.out.println("Statistics of selected game: " + game);
         }
     }
 
@@ -114,23 +114,27 @@ public class UserInterface {
         String title=scanner.nextLine();
         IsGameInLibrary(title);
         BoardGameRepository.deleteOne(title);
-
-
-
     }
 
+    @SneakyThrows
     public static void DeleteAllGames (){
-
+        System.out.println("Are you sure you want to delete your whole library?\nInput yes/no to confirm:");
+        Scanner scanner=new Scanner(System.in);
+        String cmd=scanner.nextLine().trim().toLowerCase();
+        if(cmd.contains("yes")){
+            BoardGameRepository.deleteAll();
+            System.out.println("Deleting complete. Database empty.\nReturning to initial menu");
+        }
     }
 
     @SneakyThrows
     public static boolean IsGameInLibrary(String name){
         List<Boardgame> boardgames = BoardGameRepository.findAll();
-        if(boardgames.isEmpty()){
-            System.out.println("The list is empty. Probably should buy some games");
-            System.out.println("Returning to initial menu");
-            StartUI();
-        }
+//        if(boardgames.isEmpty()){
+//            System.out.println("The list is empty. Probably should buy some games");
+//            System.out.println("Returning to initial menu");
+//            StartUI();
+//        }
         return boardgames.stream().
                 map(Boardgame::getName)
                 .anyMatch(gameName->gameName.contains(name));

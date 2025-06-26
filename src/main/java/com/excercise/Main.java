@@ -12,6 +12,7 @@ public class Main {
 //            Boardgame boardgame = new Boardgame(0, "make coffee", "Strategy", 2, 30, 0);
 //            BoardGameRepository.create(boardgame);
 //            BoardGameRepository.deleteAll();
+
     }
 }
 
