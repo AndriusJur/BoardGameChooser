@@ -11,9 +11,12 @@
 
 ## Technologies used
 * Java 21
+* SQL
+* JDBC
 * H2 embedded database
 * HikariCP (for connection pooling)
-* Lombok (reducing boilerplate code)
+* Lombok (for reducing boilerplate code)
+* Maven 
 
 ## Prerequisites
 * Library is prepopulated with sample data. It is recommended to delete library before adding own games.
