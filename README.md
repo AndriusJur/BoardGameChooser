@@ -9,12 +9,12 @@
 * Delete a single game / whole library.
 * Persistent storage using H2 database.
 
-  ## Technologies used
-  * Java 21
-  * H2 embedded database
-  * HikariCP (for connection pooling)
-  * Lombok (reducing boilerplate code)
+## Technologies used
+* Java 21
+* H2 embedded database
+* HikariCP (for connection pooling)
+* Lombok (reducing boilerplate code)
 
- #Prerequisites
- * Library is prepopulated with sample data. It is recommended to delete library before adding own games.
+#Prerequisites
+* Library is prepopulated with sample data. It is recommended to delete library before adding own games.
 
