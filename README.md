@@ -30,4 +30,4 @@ A command line tool to manage boardgame collection with persistent storage, usin
 * Add filters when searching for a game.
 * Migrate the project to Spring Boot for managing dependencies.
 * Replace manual SQL with JPA/HIBERNATE.
-* Export/import collection (JSON support).
+* Suppor importing game collection from boardgamegeek.com (CSV support).
