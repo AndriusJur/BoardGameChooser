@@ -13,16 +13,21 @@ A command line tool to manage boardgame collection with persistent storage, usin
 
 ## Technologies used
 
-* Java 21
-* SQL
-* JDBC
-* H2 embedded database
-* HikariCP (for connection pooling)
-* Lombok (for reducing boilerplate code)
-* Maven 
+* Java 21.
+* SQL.
+* JDBC.
+* H2 embedded database.
+* HikariCP (for connection pooling).
+* Lombok (for reducing boilerplate code).
+* Maven.
 
 ## Prerequisites
 
 * Library is prepopulated with sample data.
 * It is recommended to clear the library before adding own games.
 
+## Roadmap
+* Add filters when searching for a game.
+* Migrate the project to Spring Boot for managing dependencies.
+* Replace manual SQL with JPA/HIBERNATE.
+* Export/import collection (JSON support).
