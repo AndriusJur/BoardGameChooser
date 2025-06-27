@@ -63,8 +63,10 @@ public class BoardGameRepository {
     }
     public static void deleteOne (String gameName) throws Exception {
         try (Connection connection=getDataSource().getConnection()){
-            var statement=connection.createStatement();
-            statement.executeUpdate("DELETE FROM BOARDGAME where name = "+gameName+"");
+            var sql = "DELETE FROM BOARDGAME where name = ?";
+            var preparedStatement=connection.prepareStatement(sql);
+            preparedStatement.setString(1,gameName);
+            preparedStatement.executeUpdate();
         }
     }
     public static Boardgame findOne(String name) throws Exception {
