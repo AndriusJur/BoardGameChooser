@@ -15,6 +15,6 @@
 * HikariCP (for connection pooling)
 * Lombok (reducing boilerplate code)
 
-#Prerequisites
+## Prerequisites
 * Library is prepopulated with sample data. It is recommended to delete library before adding own games.
 
