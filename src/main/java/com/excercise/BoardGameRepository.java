@@ -83,7 +83,7 @@ public class BoardGameRepository {
                                 resultSet.getString(3),
                                 resultSet.getInt(4),
                                 resultSet.getInt(5),
-                                resultSet.getInt(6)); // 1-6 - columns
+                                resultSet.getInt(6)); // 6  columns(name,type,count,time,timesPlayed)
                     }
                 }
             }
