@@ -27,7 +27,9 @@ A command line tool to manage boardgame collection with persistent storage, usin
 * It is recommended to clear the library before adding own games.
 
 ## Roadmap
+
 * Add filters when searching for a game.
 * Migrate the project to Spring Boot for managing dependencies.
 * Replace manual SQL with JPA/HIBERNATE.
 * Support importing game collection from boardgamegeek.com (CSV support).
+* Add frontend user interface.
