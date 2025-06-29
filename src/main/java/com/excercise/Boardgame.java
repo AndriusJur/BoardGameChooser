@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Boardgame {  // TODO: implement enum -  game type!
     int id;
     String name;
-    String gameType;
+    GameStyle gameStyle;
     int playerCount;
     int playTimePerPlayer;
     int timesPlayed;

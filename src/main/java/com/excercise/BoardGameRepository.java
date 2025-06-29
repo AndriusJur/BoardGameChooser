@@ -21,7 +21,7 @@ public class BoardGameRepository {
         try {
             //creating connection to database
             var connection = DriverManager.getConnection("jdbc:h2:./boardgame;AUTO_SERVER=TRUE");
-            String createTableSql = "create table if not exists BOARDGAME (id bigint auto_increment primary key, name varchar, gameType varchar, playerCount integer,  playTimePerPlayer integer, timesPlayed integer)";// creating a  table BOARDGAME query
+            String createTableSql = "create table if not exists BOARDGAME (id bigint auto_increment primary key, name varchar, GAMESTYLE  varchar, playerCount integer,  playTimePerPlayer integer, timesPlayed integer)";// creating a  table BOARDGAME query
             var statement = connection.createStatement();
             statement.execute(createTableSql);
 
@@ -32,10 +32,10 @@ public class BoardGameRepository {
 
         public static void create(Boardgame boardgame) throws Exception {
         try (Connection connection=getDataSource().getConnection()){
-            String insertStatement="insert into BOARDGAME (name, gameType, playerCount, playTimePerPlayer, timesPlayed) values(?, ?, ?, ?, ?)";
+            String insertStatement="insert into BOARDGAME (name, GAMESTYLE , playerCount, playTimePerPlayer, timesPlayed) values(?, ?, ?, ?, ?)";
             var preparedStatement=connection.prepareStatement(insertStatement);
             preparedStatement.setString(1, boardgame.name); //indexes correspond to question marks in sql
-            preparedStatement.setString(2, boardgame.gameType);
+            preparedStatement.setString(2, boardgame.gameStyle.name());
             preparedStatement.setInt(3, boardgame.playerCount);
             preparedStatement.setInt(4, boardgame.playTimePerPlayer);
             preparedStatement.setInt(5, boardgame.timesPlayed);
@@ -80,36 +80,17 @@ public class BoardGameRepository {
                     if (resultSet.next()) {
                         return new Boardgame(resultSet.getInt(1),
                                 resultSet.getString(2),
-                                resultSet.getString(3),
+                                GameStyle.valueOf(resultSet.getString(3)),
                                 resultSet.getInt(4),
                                 resultSet.getInt(5),
-                                resultSet.getInt(6)); // 6  columns(name,type,count,time,timesPlayed)
+                                resultSet.getInt(6));
                     }
                 }
             }
         }
         return null; // Return null if no boardgame found
     }
-//    public static Boardgame findOne (String name) throws Exception {
-//        try (Connection connection = getDataSource().getConnection()) {
-//            var insertStatement = "select * from BOARDGAME where  name = ? ";
-//
-//            var preparedStatement = connection.prepareStatement(insertStatement);
-//            preparedStatement.setString(1, name);
-//
-//            var resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                return new Boardgame(resultSet.getInt(1),
-//                        resultSet.getString(2),
-//                        resultSet.getString(3),
-//                        resultSet.getInt(4),
-//                        resultSet.getInt(5),
-//                        resultSet.getInt(6)); //1-6 - columns
-//            }
-//        }
-//        return null;
-//    }
+
     public static List<Boardgame> findAll()  throws Exception {
         List<Boardgame> boardgames = new ArrayList<>();
         try (Connection connection=getDataSource().getConnection()){
@@ -118,7 +99,7 @@ public class BoardGameRepository {
             while (resultSet.next()){
                 Boardgame boardgame =new Boardgame(resultSet.getInt(1),
                         resultSet.getString(2),
-                        resultSet.getString(3),
+                        GameStyle.valueOf(resultSet.getString(3)),
                         resultSet.getInt(4),
                         resultSet.getInt(5),
                         resultSet.getInt(6)); //1-6 - columns

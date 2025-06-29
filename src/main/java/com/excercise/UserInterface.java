@@ -55,9 +55,66 @@ public class UserInterface {
 
         Boardgame game = new Boardgame();
         game.setName(cmd);
-        System.out.println("Enter type of game:");
-        game.setGameType(scanner.nextLine().toLowerCase().trim());
-        System.out.println("Enter best suited player count ( a single number):");
+
+        System.out.println("Enter relevant number to select type of game:");
+
+        System.out.println("1 - Euro\n2 - American style" +
+                    "\n3 - Area Control\n4 - Abstract\n5 - Worker Placement" +
+                    "\n6 - DeckBuilder\n7 - Coop\n8 - Legacy\n9 - Party" +
+                    "\n 10 - Roll and X\n11 - Dexterity\n12 - TrickTaker\n13 - Other");
+            String userInput = scanner.nextLine().trim();
+            GameStyle gameStyle = null;
+
+            switch (userInput) {
+                case "1":
+                    gameStyle = GameStyle.EUROGAME;
+                    break;
+                case "2":
+                    gameStyle = GameStyle.AMERICAN_STYLE;
+                    break;
+                case "3":
+                    gameStyle = GameStyle.AREA_CONTROL;
+                    break;
+                case "4":
+                    gameStyle = GameStyle.ABSTRACT;
+                    break;
+                case "5":
+                    gameStyle = GameStyle.WORKER_PLACEMENT;
+                    break;
+                case "6":
+                    gameStyle = GameStyle.DECK_BUILDING;
+                    break;
+                case "7":
+                    gameStyle = GameStyle.COOPERATIVE;
+                    break;
+                case "8":
+                    gameStyle = GameStyle.LEGACY;
+                    break;
+                case "9":
+                    gameStyle = GameStyle.PARTY;
+                    break;
+                case "10":
+                    gameStyle = GameStyle.ROLL_AND_X;
+                    break;
+                case "11":
+                    gameStyle = GameStyle.DEXTERITY;
+                    break;
+                case "12":
+                    gameStyle = GameStyle.TRICKTAKING;
+                    break;
+                case "13":
+                    gameStyle = GameStyle.NON_SPECIFIED;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    StartUI();
+                    return;
+            }
+
+            game.setGameStyle(gameStyle);
+
+
+            System.out.println("Enter best suited player count ( a single number):");
         game.setPlayerCount(Integer.valueOf(scanner.nextLine()));
         System.out.println("playTimePerPlayer,in minutes:");
         game.setPlayTimePerPlayer(Integer.valueOf(scanner.nextLine()));
@@ -148,6 +205,9 @@ public class UserInterface {
         if (cmd.contains("yes")) {
             BoardGameRepository.deleteAll();
             System.out.println("Deleting complete. Database empty.\nReturning to initial menu");
+            StartUI();
+        }else{
+            System.out.println("Deletion cancelled. Returning to main menu");
             StartUI();
         }
     }
