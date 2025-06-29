@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-
-
         public static void StartUI () throws Exception {
-        String commands = "\n1 - Add a game to collection \n2 - Registrate a play of a game\n3 - choose a random game to play\n4- List all games in collection\n5 - Statstics of a selected game\n6- delete a single game from library\n7-delete all games from library\n0-exits app";
+        String commands = "\n1 - Add a game to collection \n2 - Registrate a play of a game\n3 - choose a random game to play" +
+                "\n4 - List all games in collection\n5 - Statstics of a selected game" +
+                "\n6- delete a single game from library\n7 - delete all games from library\n8 - import from BGG csv file (demo file is named collection)\n 0-exits app";
+
         System.out.println(commands);
         Scanner scanner = new Scanner(System.in);
         String cmd = scanner.nextLine();
@@ -37,12 +38,23 @@ public class UserInterface {
             case "7":
                 deleteAllGames();
                 break;
+            case "8":
+                enterFromBGG();
             case "0":
                 break;
         }
     }
+    @SneakyThrows
+    private static void enterFromBGG() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter filename, that you put in the root directory");
+        String filename = scanner.nextLine()+".csv";
+        BoardGameFromCSV.boardgamesBGG(filename);
 
-        @SneakyThrows
+
+    }
+
+    @SneakyThrows
         public static void addGame () {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter title of game:");// check for uniqueness!!
@@ -60,8 +72,8 @@ public class UserInterface {
 
         System.out.println("1 - Euro\n2 - American style" +
                     "\n3 - Area Control\n4 - Abstract\n5 - Worker Placement" +
-                    "\n6 - DeckBuilder\n7 - Coop\n8 - Legacy\n9 - Party" +
-                    "\n 10 - Roll and X\n11 - Dexterity\n12 - TrickTaker\n13 - Other");
+                    "\n6 - Deck Builder\n7 - Coop\n8 - Legacy\n9 - Party" +
+                    "\n 10 - Roll and X\n11 - Dexterity\n12 - Trick Taker\n13 - Other");
             String userInput = scanner.nextLine().trim();
             GameStyle gameStyle = null;
 
@@ -116,8 +128,8 @@ public class UserInterface {
 
             System.out.println("Enter best suited player count ( a single number):");
         game.setPlayerCount(Integer.valueOf(scanner.nextLine()));
-        System.out.println("playTimePerPlayer,in minutes:");
-        game.setPlayTimePerPlayer(Integer.valueOf(scanner.nextLine()));
+        System.out.println("Enter play time,in minutes:");
+        game.setPlayTime(Integer.valueOf(scanner.nextLine()));
         BoardGameRepository.create(game);
         System.out.println("Game entered into database succesfully. Returning to main menu.");
         StartUI();

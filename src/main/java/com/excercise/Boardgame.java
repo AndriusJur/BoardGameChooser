@@ -9,21 +9,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 
-public class Boardgame {  // TODO: implement enum -  game type!
+public class Boardgame {
     int id;
     String name;
     GameStyle gameStyle;
     int playerCount;
-    int playTimePerPlayer;
+    int playTime;
     int timesPlayed;
 
 
     public Boardgame(String name) {
         this.name=name;
     }
-    public Boardgame(int id, String name){
 
-        this.id=id;
-        this.name=name;
+    public Boardgame(String name, GameStyle gameStyle, int playerCount, int playTime, int timesPlayed) {
+        this.name = name;
+        this.gameStyle = gameStyle;
+        this.playerCount = playerCount;
+        this.playTime = playTime;
+        this.timesPlayed = timesPlayed;
     }
+
 }

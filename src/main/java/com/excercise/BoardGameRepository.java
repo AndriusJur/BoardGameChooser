@@ -21,7 +21,7 @@ public class BoardGameRepository {
         try {
             //creating connection to database
             var connection = DriverManager.getConnection("jdbc:h2:./boardgame;AUTO_SERVER=TRUE");
-            String createTableSql = "create table if not exists BOARDGAME (id bigint auto_increment primary key, name varchar, GAMESTYLE  varchar, playerCount integer,  playTimePerPlayer integer, timesPlayed integer)";// creating a  table BOARDGAME query
+            String createTableSql = "create table if not exists BOARDGAME (id bigint auto_increment primary key, name varchar, GAMESTYLE  varchar, playerCount integer,  playTime integer, timesPlayed integer)";// creating a  table BOARDGAME query
             var statement = connection.createStatement();
             statement.execute(createTableSql);
 
@@ -32,12 +32,12 @@ public class BoardGameRepository {
 
         public static void create(Boardgame boardgame) throws Exception {
         try (Connection connection=getDataSource().getConnection()){
-            String insertStatement="insert into BOARDGAME (name, GAMESTYLE , playerCount, playTimePerPlayer, timesPlayed) values(?, ?, ?, ?, ?)";
+            String insertStatement="insert into BOARDGAME (name, GAMESTYLE , playerCount, playTime, timesPlayed) values(?, ?, ?, ?, ?)";
             var preparedStatement=connection.prepareStatement(insertStatement);
             preparedStatement.setString(1, boardgame.name); //indexes correspond to question marks in sql
             preparedStatement.setString(2, boardgame.gameStyle.name());
             preparedStatement.setInt(3, boardgame.playerCount);
-            preparedStatement.setInt(4, boardgame.playTimePerPlayer);
+            preparedStatement.setInt(4, boardgame.playTime);
             preparedStatement.setInt(5, boardgame.timesPlayed);
             preparedStatement.execute();
         }
