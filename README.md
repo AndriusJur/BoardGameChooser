@@ -25,11 +25,12 @@ A command line tool to manage boardgame collection with persistent storage, usin
 
 * Library is prepopulated with sample data.
 * It is recommended to clear the library before adding own games.
+* Sample CSV file is provided (in CSV_management branch)
 
 ## Roadmap
 
 * Add filters when searching for a game.
 * Migrate the project to Spring Boot for managing dependencies.
 * Replace manual SQL with JPA/HIBERNATE.
-* Support importing game collection from boardgamegeek.com (CSV support).
+* **In progress -> Support importing game collection from boardgamegeek.com (CSV support).**
 * Add frontend user interface.
