@@ -19,7 +19,7 @@ A command line tool to manage boardgame collection with persistent storage, usin
 * H2 embedded database.
 * HikariCP (for connection pooling).
 * Lombok (for reducing boilerplate code).
-* Maven.
+* Maven (dependency management).
 
 ## Prerequisites
 
