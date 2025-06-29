@@ -39,9 +39,9 @@ public class BoardGameFromCSV {
 
                     .skip(1)
                     .filter(line -> !line.isEmpty())
-                    .map(row -> row.split("\t")) //splitting by tabs due to excel.
+                    .map(row -> row.split(","))
                     .map(parts -> {
-                        //checking if gamestyle exists as a anum, adding not specified if not found.
+                        //checking if gamestyle exists as an enum, adding not specified if not found.
                         GameStyle gameStyle =null;
 
                         try {
