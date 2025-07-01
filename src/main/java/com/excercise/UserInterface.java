@@ -50,6 +50,9 @@ public class UserInterface {
         System.out.println("Enter filename, that you put in the root directory");
         String filename = scanner.nextLine()+".csv";
         BoardGameFromCSV.boardgamesBGG(filename);
+        System.out.println("Entered succesfully. Returning to main menu");
+        StartUI();
+
 
 
     }

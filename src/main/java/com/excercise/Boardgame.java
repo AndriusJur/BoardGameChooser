@@ -1,5 +1,6 @@
 package com.excercise;
 
+import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,20 @@ import lombok.NoArgsConstructor;
 
 public class Boardgame {
     int id;
+
+    @CsvBindByName(column = "objectname")
     String name;
+
+    @CsvBindByName(column = "comment")
     GameStyle gameStyle;
+
+    @CsvBindByName(column = "bggbestplayers")
     int playerCount;
+
+    @CsvBindByName(column = "playingtime")
     int playTime;
+
+    @CsvBindByName(column = "numplays")
     int timesPlayed;
 
 

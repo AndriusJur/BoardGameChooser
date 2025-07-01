@@ -32,7 +32,7 @@ public class BoardGameRepository {
 
         public static void create(Boardgame boardgame) throws Exception {
         try (Connection connection=getDataSource().getConnection()){
-            String insertStatement="insert into BOARDGAME (name, GAMESTYLE , playerCount, playTime, timesPlayed) values(?, ?, ?, ?, ?)";
+            String insertStatement="insert into BOARDGAME (name, GAMESTYLE , playerCount, playTime , timesPlayed) values(?, ?, ?, ?, ?)";
             var preparedStatement=connection.prepareStatement(insertStatement);
             preparedStatement.setString(1, boardgame.name); //indexes correspond to question marks in sql
             preparedStatement.setString(2, boardgame.gameStyle.name());
