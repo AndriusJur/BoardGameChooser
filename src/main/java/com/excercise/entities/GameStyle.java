@@ -1,4 +1,4 @@
-package com.excercise;
+package com.excercise.entities;
 
 public enum GameStyle {
     EUROGAME,

@@ -1,5 +1,7 @@
-package com.excercise;
+package com.excercise.services;
 
+import com.excercise.entities.GameStyle;
+import com.excercise.entities.Boardgame;
 import lombok.SneakyThrows;
 
 import java.util.List;
