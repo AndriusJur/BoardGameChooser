@@ -32,6 +32,7 @@ A command line tool to manage boardgame collection with persistent storage, usin
 
 ## Roadmap
 
+* Add player management (currently iterating on players_management branch)
 * Add filters when searching for a game.
 * Add flexible game style possibility (multiple game styles, previously unetermined types)
 * Migrate the project to Spring Boot for easier  dependencies management.
