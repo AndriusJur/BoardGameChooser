@@ -1,6 +1,7 @@
 package com.excercise.entities;
 
 import com.excercise.services.BoardGameRepository;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,16 @@ import java.util.HashMap;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
+@Entity
+@Table(name ="PLAYER")
+
 public class Player {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
    public Long id;
+
     public String name;
     public HashMap <Boardgame,Integer> boardgamesAndTimesPlayed; // boardgame var char and timesPlayed int in SQL
     public int calculatedTotalPlays;
