@@ -27,7 +27,7 @@ A command line tool to manage boardgame collection with persistent storage, usin
 * Library is prepopulated with sample data.
 * It is recommended to clear the library before adding own games.
 * To add BGG games to library, user must add relevant game type to boardgames comment section (see gameStyle enums for corrent naming).
-* ![image](https://github.com/user-attachments/assets/92ec0a4d-dc3f-4a88-8626-1f9e30fcd92f)
+  ![image](https://github.com/user-attachments/assets/92ec0a4d-dc3f-4a88-8626-1f9e30fcd92f)
 * Sample CSV file is provided
 
 ## Roadmap
