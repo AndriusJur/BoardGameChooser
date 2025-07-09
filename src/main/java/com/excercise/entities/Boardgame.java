@@ -1,5 +1,6 @@
 package com.excercise.entities;
 
+import com.excercise.services.PlayerBoardgamePlays;
 import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,13 +17,13 @@ public class Boardgame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public int id;
+   private Long id;//changed from int to Long
 
 
     @CsvBindByName(column = "objectname")
     public  String name;
 
-
+    @Enumerated(EnumType.STRING)
     @CsvBindByName(column = "comment")
     public GameStyle gameStyle;
 
@@ -35,9 +36,11 @@ public class Boardgame {
     public  int playTime;
 
 
-    @CsvBindByName(column = "numplays")
+    @CsvBindByName(column = "numplays") //TODO: implement to work with player class
     public int timesPlayed;
 
+    @OneToMany
+    public PlayerBoardgamePlays playerBoardgamePlays;
     public Boardgame(){//hibernate needs empty constructor, could just use @noargsConstructor
 
     }

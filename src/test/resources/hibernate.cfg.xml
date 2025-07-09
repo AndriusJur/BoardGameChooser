@@ -4,6 +4,8 @@
   ~
   ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
   ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+
+
 NB! Documentation https://hibernate.org/orm/documentation/6.4/
     This config file was taken from https://github.com/marcobehlerjetbrains/hibernate-tutorial/blob/main/src/main/resources/hibernate.cfg.xml
   -->
@@ -24,6 +26,9 @@ NB! Documentation https://hibernate.org/orm/documentation/6.4/
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- auto creating tables -->
+        <property name="hbm2ddl.auto">create-drop</property>
 
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>

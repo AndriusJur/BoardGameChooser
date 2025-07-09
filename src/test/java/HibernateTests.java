@@ -1,4 +1,6 @@
 import com.excercise.entities.Boardgame;
+import com.excercise.entities.Player;
+import com.excercise.services.PlayerBoardgamePlays;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -41,36 +43,90 @@ public class HibernateTests {
     }
 
     @Test
-    public void testBasicUsage() {
-        if (sessionFactory == null) {
-            throw new IllegalStateException("SessionFactory was not initialized. Check your hibernate.cfg.xml and entity mappings.");
-        }
-
-        // Save boardgame
+    public void testThatBoardgameIsCreatedAndRetrieved() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        Boardgame boardgame = new Boardgame("TEST");
-        session.persist(boardgame);
-
+        session.persist(new Boardgame("TEST ENTRY"));
         session.getTransaction().commit();
         session.close();
 
-        List<Boardgame> result = session.createQuery("SELECT b FROM Boardgame b", Boardgame.class).getResultList();//entity's name, not columns
-
-        for (Boardgame bg : result) {
-            System.out.println("Title (" + bg.name + ") : " + bg.getTimesPlayed());
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Boardgame> result = session.createQuery( "select b from Boardgame b" , Boardgame.class).list();
+        for ( Boardgame boardgame : result) {
+            System.out.println( "Boardgame : " + boardgame.getName() + boardgame.getId() );
         }
-
         session.getTransaction().commit();
         session.close();
-        assertThat(result).isNotEmpty();
     }
-
 
     @Test
-    public void testToTestTesting() {//remove when unnecessary
-        assertThat(1).isGreaterThanOrEqualTo(0);
+    public void testThatPlayerIsCreatedAndRetrieved(){
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+        session.persist(new Player("TEST USER "));
+        session.persist(new Player("TEST USER THE SEQUEL, the ID should show 2:  "));
+
+
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Player> result = session.createQuery( "select p from Player p" , Player.class).list();
+        for ( Player p : result) {
+            System.out.println( "Player : " + p.getName() + p.getId() );
+        }
+        session.getTransaction().commit();
+        session.close();
+
     }
+    @Test
+    public void testThatAddAPlayAddsAPlay(){ //TODO: remove unclosed connection
+        //creating a player
+        Session session = sessionFactory.openSession();
+
+        session.beginTransaction();
+
+        Player player= new Player("TEST USER");
+        session.persist(player);
+
+
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+
+
+        // add a play
+        session.beginTransaction();
+
+        Boardgame bg=new Boardgame("TEST");
+        PlayerBoardgamePlays plays= new PlayerBoardgamePlays(player,bg);
+
+
+        session.persist(plays);
+
+
+        session.getTransaction().commit();
+        session.close();
+
+
+        //retrieve played  games
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        plays.toString();
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
+
+
+
+
+
 
 }
