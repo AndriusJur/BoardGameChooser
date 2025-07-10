@@ -1,6 +1,6 @@
 import com.excercise.entities.Boardgame;
 import com.excercise.entities.Player;
-import com.excercise.services.PlayerBoardgamePlays;
+import com.excercise.entities.PlayerBoardgamePlays;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -82,6 +82,7 @@ public class HibernateTests {
         session.close();
 
     }
+
     @Test
     public void testThatAddAPlayAddsAPlay(){ //TODO: remove unclosed connection
         //creating a player
@@ -120,13 +121,8 @@ public class HibernateTests {
         plays.toString();
 
         session.getTransaction().commit();
+
         session.close();
     }
-
-
-
-
-
-
 
 }

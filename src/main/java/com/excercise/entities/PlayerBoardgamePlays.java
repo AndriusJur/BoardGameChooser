@@ -1,7 +1,5 @@
-package com.excercise.services;
+package com.excercise.entities;
 
-import com.excercise.entities.Boardgame;
-import com.excercise.entities.Player;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +12,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "PLAYER_BOARDGAME_PLAYS")
+
+//helper table, serves as a connection between player and boardgame.
+//reflects a game, which players have played it, and how many times a single player has played a single game.
+
 public class PlayerBoardgamePlays {
 
     @Id
@@ -28,12 +30,16 @@ public class PlayerBoardgamePlays {
     @JoinColumn(name="boardgame_id")//same
     private Boardgame boardgame;
 
+
     private Integer timesPlayed;//NB: timesPlayed A SINGLE BOARDGAME!!!
 
     public PlayerBoardgamePlays(Player player) {
+        this.player=player;
+        this.timesPlayed=0;
     }
 
     public PlayerBoardgamePlays(Player player, Boardgame bg) {
 
     }
+
 }

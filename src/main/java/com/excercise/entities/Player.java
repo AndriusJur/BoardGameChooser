@@ -1,11 +1,11 @@
 package com.excercise.entities;
 
-import com.excercise.services.PlayerBoardgamePlays;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,8 +23,8 @@ public class Player {
 
     private String name;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL ) // one player ->many boardgames. Foreign key
-    private List<PlayerBoardgamePlays> PlayerBoardgamePlays;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL ) // one player ->many boardgames.
+    private List<PlayerBoardgamePlays> PlayerBoardgamePlays= new ArrayList<>();
 
 
     private int calculatedTotalPlays;

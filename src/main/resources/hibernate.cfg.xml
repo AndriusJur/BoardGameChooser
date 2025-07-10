@@ -35,6 +35,7 @@ NB! Documentation https://hibernate.org/orm/documentation/6.4/
         <!-- Names the annotated entity class -->
         <mapping class="com.excercise.entities.Boardgame"/>
         <mapping class="com.excercise.entities.Player"/>
+        <mapping class="com.excercise.entities.PlayerBoardgamePlays"/>
 
 
 

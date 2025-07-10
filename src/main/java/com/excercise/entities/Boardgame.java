@@ -1,13 +1,17 @@
 package com.excercise.entities;
 
-import com.excercise.services.PlayerBoardgamePlays;
 import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 
 @Entity
 @Table(name ="BOARDGAME")
@@ -39,11 +43,10 @@ public class Boardgame {
     @CsvBindByName(column = "numplays") //TODO: implement to work with player class
     public int timesPlayed;
 
-    @OneToMany
-    public PlayerBoardgamePlays playerBoardgamePlays;
-    public Boardgame(){//hibernate needs empty constructor, could just use @noargsConstructor
+    @OneToMany(mappedBy = "boardgame", cascade = CascadeType.ALL)
+    private List<PlayerBoardgamePlays> playerBoardgamePlays = new ArrayList<>();
 
-    }
+
     public Boardgame(String name) {
         this.name=name;
     }
@@ -56,4 +59,10 @@ public class Boardgame {
         this.timesPlayed = timesPlayed;
     }
 
+
+    //constructor made for tests
+    public Boardgame(int anInt, String string, GameStyle gameStyle, int anInt1, int anInt2, int anInt3) {
+
+
+    }
 }
